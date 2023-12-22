@@ -84,3 +84,69 @@ class Solution {
 }
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 4.
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+5.Next Greater Element I
+class Solution {
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        Stack<Integer> st = new Stack<>();
+
+        HashMap<Integer,Integer> map = new HashMap<>();
+
+        for(int num:nums2){
+            while(!st.empty() && st.peek()<num){
+                map.put(st.pop(),num);
+            }
+            st.push(num);
+        }
+
+        for(int i=0;i<nums1.length;i++){
+            nums1[i]=map.containsKey(nums1[i])?map.get(nums1[i]):-1;
+        }
+        return nums1;
+    }
+}
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+6. Maximal Rectangle
+class Solution {
+    public int findMaxRectangle( int histo[]){
+         Stack < Integer > st = new Stack < > ();
+        int maxA = 0;
+        int n = histo.length;
+        for (int i = 0; i <= n; i++) {
+            while (!st.empty() && (i == n || histo[st.peek()] >= histo[i])) {
+                int height = histo[st.peek()];
+                st.pop();
+                int width;
+                if (st.empty())
+                    width = i;
+                else
+                    width = i - st.peek() - 1;
+                maxA = Math.max(maxA, width * height);
+            }
+            st.push(i);
+        }
+        return maxA;
+    }
+    public int maximalRectangle(char[][] matrix) {
+        int r=matrix.length;
+        int c=matrix[0].length;
+        int heights[]=new int [c];
+        int maxArea=0;
+        for(int i=0;i<r;i++){
+            for(int j=0;j<c;j++){
+                if(matrix[i][j]=='1')heights[j]++;
+                else heights[j]=0;
+            }
+            int area=findMaxRectangle(heights);
+            maxArea=Math.max(maxArea,area);
+        }
+        return maxArea;
+    }
+}
+// Time Complexity: O(N * (M+M)), where N = total no. of rows and M = total no. of columns.
+// Reason: O(N) for running a loop to check all rows. Now, inside that loop, O(M) is for visiting all the columns, and another O(M) is for the function we are using. The function takes linear time complexity. Here, the size of the height array is M, so it will take O(M).
+
+// Space Complexity: O(M), where M = total no. of columns.
+// Reason: We are using a height array and a stack of size M.
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+7.
