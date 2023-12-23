@@ -149,4 +149,32 @@ class Solution {
 // Space Complexity: O(M), where M = total no. of columns.
 // Reason: We are using a height array and a stack of size M.
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-7.
+7.sort stack
+class GfG{
+	public Stack<Integer> sort(Stack<Integer> s)
+	{
+		
+		if(s.empty()){
+		    return s;
+		}
+		
+		int top = s.peek();
+		s.pop();
+		sort(s);
+		insert(s,top);
+		return s;
+	}
+	
+	public static void insert(Stack<Integer> s,int current){
+	    if(s.empty() || current>s.peek()){
+	        s.push(current);
+	        return;
+	    }
+	    
+	    int temp = s.peek();
+	    s.pop();
+	    insert(s,current);
+	    s.push(temp);
+	}
+}
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
